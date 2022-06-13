@@ -1,4 +1,5 @@
 import decimal
+
 from bson.decimal128 import Decimal128
 from pymongo import MongoClient
 
@@ -82,6 +83,7 @@ def get_order_price_average(query_filter: dict):
         order_pairs[currentSymbol]['cummulativeQuoteQty'] = nextQuoteQty
 
     return order_pairs
+
 
 print(get_buy_order_price_average())
 print(get_sell_order_price_average())

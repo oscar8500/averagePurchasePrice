@@ -1,12 +1,12 @@
 import json
+import logging
 
-import binance
+from binance.lib.utils import config_logging
+from binance.spot import Spot as Client
+
 import configs.config_binance as config
 import configs.config_crypto_list as crypto_assets
-import logging
 import data_maps.data_exchange_info as exchange_info
-from binance.spot import Spot as Client
-from binance.lib.utils import config_logging
 
 config_logging(logging, logging.DEBUG)
 utils_client = Client(config.key, config.secret)
@@ -29,7 +29,7 @@ def get_all_possible_pairs_from_config():
 
     for asset1 in crypto_assets.crypto_assets:
         for asset2 in crypto_assets.crypto_assets:
-            asset_pairs[asset1+asset2] = [asset1, asset2]
+            asset_pairs[asset1 + asset2] = [asset1, asset2]
     return asset_pairs
 
 

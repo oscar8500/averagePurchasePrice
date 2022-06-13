@@ -8,7 +8,6 @@
 
 from typing import Any, Optional, List, TypeVar, Callable, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -85,7 +84,13 @@ class Symbol:
     filters: Optional[List[Any]]
     permissions: Optional[List[str]]
 
-    def __init__(self, symbol: Optional[str], status: Optional[str], base_asset: Optional[str], base_asset_precision: Optional[int], quote_asset: Optional[str], quote_precision: Optional[int], quote_asset_precision: Optional[int], order_types: Optional[List[str]], iceberg_allowed: Optional[bool], oco_allowed: Optional[bool], quote_order_qty_market_allowed: Optional[bool], allow_trailing_stop: Optional[bool], is_spot_trading_allowed: Optional[bool], is_margin_trading_allowed: Optional[bool], filters: Optional[List[Any]], permissions: Optional[List[str]]) -> None:
+    def __init__(self, symbol: Optional[str], status: Optional[str], base_asset: Optional[str],
+                 base_asset_precision: Optional[int], quote_asset: Optional[str], quote_precision: Optional[int],
+                 quote_asset_precision: Optional[int], order_types: Optional[List[str]],
+                 iceberg_allowed: Optional[bool], oco_allowed: Optional[bool],
+                 quote_order_qty_market_allowed: Optional[bool], allow_trailing_stop: Optional[bool],
+                 is_spot_trading_allowed: Optional[bool], is_margin_trading_allowed: Optional[bool],
+                 filters: Optional[List[Any]], permissions: Optional[List[str]]) -> None:
         self.symbol = symbol
         self.status = status
         self.base_asset = base_asset
@@ -122,7 +127,9 @@ class Symbol:
         is_margin_trading_allowed = from_union([from_bool, from_none], obj.get("isMarginTradingAllowed"))
         filters = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("filters"))
         permissions = from_union([lambda x: from_list(from_str, x), from_none], obj.get("permissions"))
-        return Symbol(symbol, status, base_asset, base_asset_precision, quote_asset, quote_precision, quote_asset_precision, order_types, iceberg_allowed, oco_allowed, quote_order_qty_market_allowed, allow_trailing_stop, is_spot_trading_allowed, is_margin_trading_allowed, filters, permissions)
+        return Symbol(symbol, status, base_asset, base_asset_precision, quote_asset, quote_precision,
+                      quote_asset_precision, order_types, iceberg_allowed, oco_allowed, quote_order_qty_market_allowed,
+                      allow_trailing_stop, is_spot_trading_allowed, is_margin_trading_allowed, filters, permissions)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -152,7 +159,8 @@ class ExchangeInfo:
     exchange_filters: Optional[List[Any]]
     symbols: Optional[List[Symbol]]
 
-    def __init__(self, timezone: Optional[str], server_time: Optional[int], rate_limits: Optional[List[RateLimit]], exchange_filters: Optional[List[Any]], symbols: Optional[List[Symbol]]) -> None:
+    def __init__(self, timezone: Optional[str], server_time: Optional[int], rate_limits: Optional[List[RateLimit]],
+                 exchange_filters: Optional[List[Any]], symbols: Optional[List[Symbol]]) -> None:
         self.timezone = timezone
         self.server_time = server_time
         self.rate_limits = rate_limits
@@ -173,7 +181,8 @@ class ExchangeInfo:
         result: dict = {}
         result["timezone"] = from_union([from_str, from_none], self.timezone)
         result["serverTime"] = from_union([from_int, from_none], self.server_time)
-        result["rateLimits"] = from_union([lambda x: from_list(lambda x: to_class(RateLimit, x), x), from_none], self.rate_limits)
+        result["rateLimits"] = from_union([lambda x: from_list(lambda x: to_class(RateLimit, x), x), from_none],
+                                          self.rate_limits)
         result["exchangeFilters"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.exchange_filters)
         result["symbols"] = from_union([lambda x: from_list(lambda x: to_class(Symbol, x), x), from_none], self.symbols)
         return result

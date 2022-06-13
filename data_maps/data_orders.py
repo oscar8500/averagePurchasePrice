@@ -8,7 +8,6 @@
 
 from typing import Optional, Any, List, TypeVar, Callable, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -71,7 +70,12 @@ class Order:
     is_working: Optional[bool]
     orig_quote_order_qty: Optional[str]
 
-    def __init__(self, symbol: Optional[str], order_id: Optional[int], order_list_id: Optional[int], client_order_id: Optional[str], price: Optional[str], orig_qty: Optional[str], executed_qty: Optional[str], cummulative_quote_qty: Optional[str], status: Optional[str], time_in_force: Optional[str], type: Optional[str], side: Optional[str], stop_price: Optional[str], iceberg_qty: Optional[str], time: Optional[int], update_time: Optional[int], is_working: Optional[str], orig_quote_order_qty: Optional[str]) -> None:
+    def __init__(self, symbol: Optional[str], order_id: Optional[int], order_list_id: Optional[int],
+                 client_order_id: Optional[str], price: Optional[str], orig_qty: Optional[str],
+                 executed_qty: Optional[str], cummulative_quote_qty: Optional[str], status: Optional[str],
+                 time_in_force: Optional[str], type: Optional[str], side: Optional[str], stop_price: Optional[str],
+                 iceberg_qty: Optional[str], time: Optional[int], update_time: Optional[int], is_working: Optional[str],
+                 orig_quote_order_qty: Optional[str]) -> None:
         self.symbol = symbol
         self.order_id = order_id
         self.order_list_id = order_list_id
@@ -112,7 +116,9 @@ class Order:
         update_time = from_union([from_int, from_none], obj.get("updateTime"))
         is_working = from_union([from_bool, from_none], obj.get("isWorking"))
         orig_quote_order_qty = from_union([from_str, from_none], obj.get("origQuoteOrderQty"))
-        return Order(symbol, order_id, order_list_id, client_order_id, price, orig_qty, executed_qty, cummulative_quote_qty, status, time_in_force, type, side, stop_price, iceberg_qty, time, update_time, is_working, orig_quote_order_qty)
+        return Order(symbol, order_id, order_list_id, client_order_id, price, orig_qty, executed_qty,
+                     cummulative_quote_qty, status, time_in_force, type, side, stop_price, iceberg_qty, time,
+                     update_time, is_working, orig_quote_order_qty)
 
     def to_dict(self) -> dict:
         result: dict = {}

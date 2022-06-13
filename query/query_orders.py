@@ -2,9 +2,11 @@
 
 import json
 import logging
-from binance.spot import Spot as Client
+
 from binance.lib.utils import config_logging
+from binance.spot import Spot as Client
 from pymongo import MongoClient
+
 import configs.config_binance as cfg
 import data_maps.data_orders as order
 import utils.crypto_utils as crypto_utils

@@ -7,9 +7,8 @@
 #     result = BinanceSpotfromdict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Any, List, TypeVar, Callable, Type, cast
 from enum import Enum
-
+from typing import Any, List, TypeVar, Callable, Type, cast
 
 T = TypeVar("T")
 EnumT = TypeVar("EnumT", bound=Enum)

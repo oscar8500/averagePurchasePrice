@@ -2,8 +2,10 @@
 
 import json
 import logging
-from binance.spot import Spot as Client
+
 from binance.lib.utils import config_logging
+from binance.spot import Spot as Client
+
 import configs.config_binance as cfg
 import data_maps.data_savings as savings
 
@@ -30,4 +32,3 @@ for asset in binance_savings_info.position_amount_vos:
     print(str(asset.amount))
     print(str(asset.amount_in_btc))
     print(str(asset.amount_in_usdt))
-

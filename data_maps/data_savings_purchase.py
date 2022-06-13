@@ -9,7 +9,6 @@
 from enum import Enum
 from typing import Optional, Any, List, TypeVar, Type, Callable, cast
 
-
 T = TypeVar("T")
 EnumT = TypeVar("EnumT", bound=Enum)
 
@@ -71,7 +70,9 @@ class SavingsPurchaseElement:
     status: Optional[Status]
     lending_type: Optional[LendingType]
 
-    def __init__(self, purchase_id: Optional[int], create_time: Optional[int], product_name: Optional[str], asset: Optional[str], amount: Optional[str], status: Optional[Status], lending_type: Optional[LendingType]) -> None:
+    def __init__(self, purchase_id: Optional[int], create_time: Optional[int], product_name: Optional[str],
+                 asset: Optional[str], amount: Optional[str], status: Optional[Status],
+                 lending_type: Optional[LendingType]) -> None:
         self.purchase_id = purchase_id
         self.create_time = create_time
         self.product_name = product_name

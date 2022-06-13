@@ -2,9 +2,11 @@
 
 import json
 import logging
-from binance.spot import Spot as Client
-from binance.lib.utils import config_logging
 from datetime import datetime
+
+from binance.lib.utils import config_logging
+from binance.spot import Spot as Client
+
 import configs.config_binance as cfg
 import data_maps.data_spot as spot
 
@@ -36,4 +38,5 @@ for snapshot_value in binance_spot_info.snapshotVos:
     for asset in snapshot_value.data.balances:
         if float(asset.free) + float(asset.locked) > 0:
             print("Balance in " + str(asset.asset) + ": " + str(asset.free))
-    print("----------**********----------**********----------**********----------**********----------**********----------**********----------**********")
+    print(
+        "----------**********----------**********----------**********----------**********----------**********----------**********----------**********")

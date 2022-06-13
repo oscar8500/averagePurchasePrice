@@ -8,12 +8,13 @@
 
 from typing import Optional, Any, List, TypeVar, Callable, Type, cast
 
-
 T = TypeVar("T")
 
-def from_bool(x:Any) ->bool:
-    assert isinstance(x,bool)
+
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
     return x
+
 
 def from_str(x: Any) -> str:
     assert isinstance(x, str)
@@ -65,7 +66,11 @@ class Datum:
     counter_part_nick_name: Optional[str]
     advertisement_role: Optional[str]
 
-    def __init__(self, order_number: Optional[str], adv_no: Optional[str], trade_type: Optional[str], asset: Optional[str], fiat: Optional[str], fiat_symbol: Optional[str], amount: Optional[str], total_price: Optional[str], unit_price: Optional[str], order_status: Optional[str], create_time: Optional[int], commission: Optional[str], counter_part_nick_name: Optional[str], advertisement_role: Optional[str]) -> None:
+    def __init__(self, order_number: Optional[str], adv_no: Optional[str], trade_type: Optional[str],
+                 asset: Optional[str], fiat: Optional[str], fiat_symbol: Optional[str], amount: Optional[str],
+                 total_price: Optional[str], unit_price: Optional[str], order_status: Optional[str],
+                 create_time: Optional[int], commission: Optional[str], counter_part_nick_name: Optional[str],
+                 advertisement_role: Optional[str]) -> None:
         self.order_number = order_number
         self.adv_no = adv_no
         self.trade_type = trade_type
@@ -98,7 +103,8 @@ class Datum:
         commission = from_union([from_str, from_none], obj.get("commission"))
         counter_part_nick_name = from_union([from_str, from_none], obj.get("counterPartNickName"))
         advertisement_role = from_union([from_str, from_none], obj.get("advertisementRole"))
-        return Datum(order_number, adv_no, trade_type, asset, fiat, fiat_symbol, amount, total_price, unit_price, order_status, create_time, commission, counter_part_nick_name, advertisement_role)
+        return Datum(order_number, adv_no, trade_type, asset, fiat, fiat_symbol, amount, total_price, unit_price,
+                     order_status, create_time, commission, counter_part_nick_name, advertisement_role)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -126,7 +132,8 @@ class P2P:
     total: Optional[int]
     success: Optional[bool]
 
-    def __init__(self, code: Optional[str], message: Optional[str], data: Optional[List[Datum]], total: Optional[int], success: Optional[bool]) -> None:
+    def __init__(self, code: Optional[str], message: Optional[str], data: Optional[List[Datum]], total: Optional[int],
+                 success: Optional[bool]) -> None:
         self.code = code
         self.message = message
         self.data = data

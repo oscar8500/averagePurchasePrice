@@ -1,15 +1,16 @@
 # Gets all P2P Transactions and store them in mongoDB
 
-import logging
 import json
-from binance.spot import Spot as Client
+import logging
+from datetime import datetime, timedelta
+
 from binance.lib.utils import config_logging
+from binance.spot import Spot as Client
 from pymongo import MongoClient
 
 import configs.config_binance as cfg
 from configs.config_crypto_list import starting_timestamp
 from data_maps.data_p2p import p2_p_from_dict
-from datetime import datetime, timedelta
 
 config_logging(logging, logging.DEBUG)
 
