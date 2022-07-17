@@ -1,0 +1,3 @@
+binance==0.3
+binance_connector==1.12.0
+pymongo==4.1.1

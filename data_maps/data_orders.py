@@ -58,7 +58,7 @@ class Order:
     price: Optional[str]
     orig_qty: Optional[str]
     executed_qty: Optional[str]
-    cummulative_quote_qty: Optional[str]
+    cumulative_quote_qty: Optional[str]
     status: Optional[str]
     time_in_force: Optional[str]
     type: Optional[str]
@@ -72,7 +72,7 @@ class Order:
 
     def __init__(self, symbol: Optional[str], order_id: Optional[int], order_list_id: Optional[int],
                  client_order_id: Optional[str], price: Optional[str], orig_qty: Optional[str],
-                 executed_qty: Optional[str], cummulative_quote_qty: Optional[str], status: Optional[str],
+                 executed_qty: Optional[str], cumulative_quote_qty: Optional[str], status: Optional[str],
                  time_in_force: Optional[str], type: Optional[str], side: Optional[str], stop_price: Optional[str],
                  iceberg_qty: Optional[str], time: Optional[int], update_time: Optional[int], is_working: Optional[str],
                  orig_quote_order_qty: Optional[str]) -> None:
@@ -83,7 +83,7 @@ class Order:
         self.price = price
         self.orig_qty = orig_qty
         self.executed_qty = executed_qty
-        self.cummulative_quote_qty = cummulative_quote_qty
+        self.cumulative_quote_qty = cumulative_quote_qty
         self.status = status
         self.time_in_force = time_in_force
         self.type = type
@@ -105,7 +105,7 @@ class Order:
         price = from_union([from_str, from_none], obj.get("price"))
         orig_qty = from_union([from_str, from_none], obj.get("origQty"))
         executed_qty = from_union([from_str, from_none], obj.get("executedQty"))
-        cummulative_quote_qty = from_union([from_str, from_none], obj.get("cummulativeQuoteQty"))
+        cumulative_quote_qty = from_union([from_str, from_none], obj.get("cummulativeQuoteQty"))
         status = from_union([from_str, from_none], obj.get("status"))
         time_in_force = from_union([from_str, from_none], obj.get("timeInForce"))
         type = from_union([from_str, from_none], obj.get("type"))
@@ -117,7 +117,7 @@ class Order:
         is_working = from_union([from_bool, from_none], obj.get("isWorking"))
         orig_quote_order_qty = from_union([from_str, from_none], obj.get("origQuoteOrderQty"))
         return Order(symbol, order_id, order_list_id, client_order_id, price, orig_qty, executed_qty,
-                     cummulative_quote_qty, status, time_in_force, type, side, stop_price, iceberg_qty, time,
+                     cumulative_quote_qty, status, time_in_force, type, side, stop_price, iceberg_qty, time,
                      update_time, is_working, orig_quote_order_qty)
 
     def to_dict(self) -> dict:
@@ -129,7 +129,7 @@ class Order:
         result["price"] = from_union([from_str, from_none], self.price)
         result["origQty"] = from_union([from_str, from_none], self.orig_qty)
         result["executedQty"] = from_union([from_str, from_none], self.executed_qty)
-        result["cummulativeQuoteQty"] = from_union([from_str, from_none], self.cummulative_quote_qty)
+        result["cumulativeQuoteQty"] = from_union([from_str, from_none], self.cumulative_quote_qty)
         result["status"] = from_union([from_str, from_none], self.status)
         result["timeInForce"] = from_union([from_str, from_none], self.time_in_force)
         result["type"] = from_union([from_str, from_none], self.type)

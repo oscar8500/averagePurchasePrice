@@ -10,6 +10,7 @@ db = client['binance']
 collection = db["transactions"]
 
 
+# Gets the average order price for filled and sell orders
 def get_sell_order_price_average():
     query_filter = {
         'status': 'FILLED',
@@ -18,6 +19,7 @@ def get_sell_order_price_average():
     return get_order_price_average(query_filter)
 
 
+# Gets the average order price for filled and buy orders
 def get_buy_order_price_average():
     query_filter = {
         'status': 'FILLED',
@@ -26,6 +28,7 @@ def get_buy_order_price_average():
     return get_order_price_average(query_filter)
 
 
+# Gets the average order price for a given filter ordered by symbol
 def get_order_price_average(query_filter: dict):
     query_project = {
         '_id': 0,
@@ -33,13 +36,13 @@ def get_order_price_average(query_filter: dict):
         'executedQty': {
             '$toDecimal': '$executedQty'
         },
-        'cummulativeQuoteQty': {
-            '$toDecimal': '$cummulativeQuoteQty'
+        'cumulativeQuoteQty': {
+            '$toDecimal': '$cumulativeQuoteQty'
         },
         'price': {
             '$divide': [
                 {
-                    '$toDecimal': '$cummulativeQuoteQty'
+                    '$toDecimal': '$cumulativeQuoteQty'
                 }, {
                     '$toDecimal': '$executedQty'
                 }
@@ -58,32 +61,32 @@ def get_order_price_average(query_filter: dict):
     order_pairs = dict()
 
     for pair in valid_pairs:
-        order_pairs[pair] = {'price': 0, 'cummulativeQuoteQty': 0, 'executedQty': 0}
+        order_pairs[pair] = {'price': 0, 'cumulativeQuoteQty': 0, 'executedQty': 0}
 
     for smth in result:
-        currentSymbol = smth['symbol']
-        currentPrice = Decimal128.to_decimal(smth['price'])
-        currentExecutedQty = Decimal128.to_decimal(smth['executedQty'])
-        currentQuoteQty = Decimal128.to_decimal(smth['cummulativeQuoteQty'])
+        current_symbol = smth['symbol']
+        current_price = Decimal128.to_decimal(smth['price'])
+        current_executed_qty = Decimal128.to_decimal(smth['executedQty'])
+        current_quote_qty = Decimal128.to_decimal(smth['cumulativeQuoteQty'])
 
-        lastPrice = decimal.Decimal(order_pairs[currentSymbol]['price'])
-        lastExecutedQty = decimal.Decimal(order_pairs[currentSymbol]['executedQty'])
-        lastQuoteQty = decimal.Decimal(order_pairs[currentSymbol]['cummulativeQuoteQty'])
+        last_price = decimal.Decimal(order_pairs[current_symbol]['price'])
+        last_executed_qty = decimal.Decimal(order_pairs[current_symbol]['executedQty'])
+        last_quote_qty = decimal.Decimal(order_pairs[current_symbol]['cumulativeQuoteQty'])
 
-        nextExecutedQty = lastExecutedQty + currentExecutedQty
+        next_executed_qty = last_executed_qty + current_executed_qty
 
-        lastWExecutedQty = (lastExecutedQty / nextExecutedQty)
-        currentWExecutedQty = (currentExecutedQty / nextExecutedQty)
+        last_weighted_executed_qty = (current_executed_qty / next_executed_qty)
+        current_weighted_executed_qty = (current_executed_qty / next_executed_qty)
 
-        nextPrice = lastPrice * lastWExecutedQty + currentPrice * currentWExecutedQty
-        nextQuoteQty = lastQuoteQty + currentQuoteQty
+        next_price = last_price * last_weighted_executed_qty + current_price * current_weighted_executed_qty
+        next_quote_qty = last_quote_qty + current_quote_qty
 
-        order_pairs[currentSymbol]['price'] = nextPrice
-        order_pairs[currentSymbol]['executedQty'] = nextExecutedQty
-        order_pairs[currentSymbol]['cummulativeQuoteQty'] = nextQuoteQty
+        order_pairs[current_symbol]['price'] = next_price
+        order_pairs[current_symbol]['executedQty'] = next_executed_qty
+        order_pairs[current_symbol]['cumulativeQuoteQty'] = next_quote_qty
 
     return order_pairs
 
 
 print(get_buy_order_price_average())
-print(get_sell_order_price_average())
+#print(get_sell_order_price_average())
